@@ -1,0 +1,183 @@
+########################
+
+Autor: Thomas Krämer (mathematikfosbayern@gmx.de)
+
+########################
+
+Lizenzbedingungen:
+
+Wenn Ihnen das Programm nützt und/oder gefällt,
+spenden Sie bitte einen Betrag Ihrer Wahl an den
+
+Tierschutzverein Lauf und Umgebung e.V.:
+
+IBAN DE 38 76050101 0240250696
+BIC SSKNDE77XXX
+
+Kennwort: Baumdiagramm
+
+#########################
+
+
+
+Im Folgenden wird an Beispielen beschrieben, was in ein Terminal (auch genannt: Konsole, Kommandozeile, Eingabeaufforderung) einzugeben ist, damit ein Baumdiagramm erstellt wird.
+
+Groß-/Kleinschreibung und Zwischen-Leerzeichen sind wichtig!
+
+Wenn das Programm nicht in einem Pfad liegt, der in der Umgebungsvariable PATH eingetragen ist, muss man  erst in das Verzeichnis wechseln, in dem die Datei baum (Windows: baum.exe) liegt. Das geht mit cd. Zum Beispiel:
+
+cd "C:\Programme\Baum"     (Windows)
+cd "/home/masteroftheuniverse/programs/baum"     (Linux)
+
+In diesem Fall muss man bei Linux außerdem ./baum statt baum in folgenden Beispiele eingeben.
+
+Grundlegende Eingabe: Es gibt drei Trenner: Das Pluszeichen "+", das Komma "," und das Leerzeichen " ". Mit dem Leerzeichen werden die einzelnen Stufen des Baumdiagramms abgegrenzt, mit den Kommas die einzelnen Knotengruppen und mit den Pluszeichen die einzelnen Knoten innerhalb einer Gruppe, die von einem Punkt ausgeht.
+
+Nach dem ersten Benutzen des Programms liegen drei Einstellungsdateien im Verzeichnis [HOMEVERZEICHNIS]/.config/Baumdiagramme (unter Windows: [appdata]\Baumdiagramme). Diese Ordner sind versteckt, müssen also evtl. erst sichtbar gemacht werden. Dort kann man auswählen, ob svg- oder odt-Dateien erzeugt werden sollen und das Aussehen des Baumdiagramms vielfältig verändern. Die Dateien sind kommentiert, sie sollten also relativ einfach zu verstehen sein.
+
+Beispiele:
+
+1) Einfaches Baumdiagramm erstellen:
+
+  a) ohne Wahrscheinlichkeiten
+
+     baum A+B A+B+C+D,A+B
+
+  b) mit Wahrscheinlichkeiten (einfach ein p anhängen und die selbe Anzahl an Kommas, Plus- und Leerzeichen verwenden):
+
+     1. Mit Dezimalzahlen (Achtung Trenner ist Punkt, kein Komma):
+
+        baum A+B+C D+E,F,G+H+I+J p 0.1+0.2+0.7 0.2+0.8,1,0.1+0.2+0.3+0.4
+
+     2. Mit Brüchen (Trenner Schrägstrich: /)
+
+        baum A+B+C D+E,F,G+H+I+J p 1/3+1/3+1/3 1/4+3/4,1,2/3+1/9+1/9+1/9
+
+
+
+2) Ein Baumdiagramm erstellen, bei dem alle Stufen unabhängig voneinander sind:
+
+  a) ohne Wahrscheinlichkeiten:
+
+     baum u A+B C+D+E F+G+H+I
+
+  b) mit Wahrscheinlichkeiten:
+
+     baum u A+B C+D+E F+G+H+I p 0.1+0.9 0.2+0.7+0.1 0.1+0.2+0.3+0.4
+
+     Auch hier können natürlich Brüche eingegeben werden.
+
+
+
+3) Ein Baumdiagramm erstellen, bei der jede Stufe aus den gleichen Ergebnissen besteht:
+
+  a) ohne Wahrscheinlichkeiten
+
+      baum m 3 A+B+C
+
+      Hiermit hat jede der drei Stufen die Ergebnisse A, B und C.
+
+      baum m 5 A+B
+
+      Hiermit hat jede der fünf Stufen die Ergebnisse A und B.
+
+  b) mit Wahrscheinlichkeiten
+
+      baum m 3 A+B+C 1/3+1/3+1/3
+
+      baum m 4 A+B 1/4+3/4
+
+      baum m 2 A+B+C 0.2+0.3+0.5
+
+      Eine Abkürzung gibt es noch:
+
+        baum m 2 A+B+C+D g
+
+      ist gleichbedeutend mit
+
+        baum m 2 A+B+C+D 1/4+1/4+1/4+1/4
+
+      g steht für gleichverteilt.
+
+        baum m 2 1+2+3+4+5+6 g
+
+      ist also dasselbe wie:
+
+        baum m 2 1+2+3+4+5+6 1/6+1/6+1/6+1/6+1/6+1/6
+
+
+
+4) Ein Baumdiagramm zu einem Urnenexperiment erstellen:
+
+  a) Ziehen aus einer Urne mit Zurücklegen
+
+      1. ohne Wahrscheinlichkeiten
+
+           baum z 3 R 40 W 20
+
+         Hier wird 5 mal aus einer Urne gezogen, die 40 rote (R) und 20 weiße (W) Kugeln enthält.
+
+           baum z 3 B 40 W 20 G 20 R 20
+
+         Hier wird 3 mal aus einer Urne gezogen, die 40 blaue (B), 20 weiße (W), 20 gelbe (G) und 20 rote (R) Kugeln enthält.
+
+      2. mit Wahrscheinlichkeiten (einfach ein p anhängen)
+
+           baum z 5 R 40 W 20 p
+
+         Hier wird 5 mal aus einer Urne gezogen, die 40 rote (R) und 20 weiße (W) Kugeln enthält.
+
+           baum z 3 B 40 W 20 G 20 R 20 p
+
+         Hier wird 3 mal aus einer Urne gezogen, die 40 blaue (B), 20 weiße (W), 20 gelbe (G) und 20 rote (R) Kugeln enthält.
+
+  b) Ziehen aus einer Urne ohne Zurücklegen
+
+      Analog zu "mit Zurücklegen" nur statt z ein o:
+
+        baum o 5 R 40 W 20         (ohne Wahrscheinlichkeiten)
+
+        oder
+
+        baum o 5 R 40 W 20 p       (mit Wahrscheinlichkeiten)
+
+      Hier darf natürlich die Anzahl der Züge die Gesamtanzahl der Kugeln nicht überschreiten.
+
+  c) Ziehen aus einer Urne mit Dazulegen
+
+      Analog zu "mit Zurücklegen" nur statt z ein d:
+
+        baum d 5 R 40 W 20         (ohne Wahrscheinlichkeiten)
+
+        oder
+
+        baum d 5 R 40 W 20 p       (ohne Wahrscheinlichkeiten)
+
+
+
+5) Special Features ;-)
+
+  a) Man kann auch überstrichene Gegenereignisse darstellen, und zwar mithilfe der Tilde "~":
+
+       baum u A+A~ B+B~ C+C~
+
+  b) Man kann ebenfalls gestutzte Baumdiagramme zeichnen, bei denen nicht alle Pfade durch alle Stufen gehen:
+
+       Man hält so oft das Geschlecht einer zufällig ausgewählten Person fest, bis man zum ersten mal eine weibliche Person findet. Maximal jedoch vier Personen:
+
+       baum W+M -,W+M -,-,W+M -,-,-,W+M
+
+       oder mit W quer statt M
+
+       baum W+W~ -,W+W~ -,-,W+W~ -,-,-,W+W~
+
+       auch mit Wahrscheinlichkeiten möglich. Die fehlenden Pfade haben natürlich die Wahrscheinlichkeit 1 (das Programm rechnet aber auch mit anderen Zahlen).
+
+       baum W+M -,W+M -,-,W+M -,-,-,W+M p 0.4+0.6 1,0.4+0.6 1,1,0.4+0.6 1,1,1,0.4+0.6
+
+
+
+
+
+
+
